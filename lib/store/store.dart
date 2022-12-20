@@ -1,13 +1,24 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/model/todo_model.dart';
 
 abstract class LocalStore{
 LocalStore._();
-static setList(List<String> todos) async {
+static setTodo(TodoModel todo) async {
   SharedPreferences store=await SharedPreferences.getInstance();
-  store.setStringList('todo', todos);
+  List<String> list=store.getStringList('todo') ?? [];
+  String todoJson=jsonEncode(todo.ToJson());
+  list.add(todoJson);
+  store.setStringList('todo', list);
 }
-static Future<List<String>> getTodo() async {
+static Future<List<TodoModel>> getTodo() async {
   SharedPreferences store=await SharedPreferences.getInstance();
-  return store.getStringList('todo') ?? [];
+  List<String> list =store.getStringList('todo')?? [];
+  List<TodoModel> listOfTodo=[];
+  list.forEach((element) {
+    listOfTodo.add(TodoModel.fromJson(jsonDecode(element)));
+  });
+  return listOfTodo;
 }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/model/todo_model.dart';
 import 'package:todo_app/page/style.dart';
 import 'package:todo_app/store/store.dart';
 
@@ -12,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  List<String> listOfTodo=[];
+  List<TodoModel> listOfTodo=[];
   TabController? _tabController;
  @override
   void initState() {
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.initState();
   }
   Future getInfo() async {
-    listOfTodo=await  LocalStore.getTodo();
+    listOfTodo=await LocalStore.getTodo();
     setState(() {});
   }
   bool isCheck=false;
@@ -68,10 +69,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           return Row(
 
             children: [
-            Checkbox(value: isCheck, onChanged: (value){
-
+            Checkbox(value: listOfTodo[index].isDone, onChanged: (value){
+              listOfTodo[index].isDone=!listOfTodo[index].isDone;
+              setState(() { });
             }),
-              Text(listOfTodo [index],style: Style.TextStyleBold(fontsize: 19,color: Colors.black,isDone: isCheck),),
+              Text(listOfTodo[index].title,style: Style.TextStyleBold(fontsize: 19,color: Colors.black,isDone: listOfTodo[index].isDone),),
             ],
           );
       }),

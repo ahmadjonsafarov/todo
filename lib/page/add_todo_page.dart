@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:todo_app/model/todo_model.dart';
 import 'package:todo_app/page/homepage.dart';
 import 'package:todo_app/page/style.dart';
 import 'package:todo_app/store/store.dart';
@@ -29,6 +32,7 @@ class _AState extends State<A> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: TextFormField(
+            maxLength: 35,
             controller: textEditingController,
             onChanged: (value){
               if(value.isEmpty){
@@ -60,9 +64,10 @@ class _AState extends State<A> {
           borderRadius: BorderRadius.circular(100),
           onTap: () async {
             if(textEditingController.text.isNotEmpty){
-              List<String> list=await LocalStore.getTodo();
-              list.add(textEditingController.text);
-              LocalStore.setList(list);
+              LocalStore.setTodo(TodoModel(title: textEditingController.text));
+              // List<String> list=await LocalStore.getTodo();
+              // list.add(textEditingController.text);
+              // LocalStore.setList(list);
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (_)=>HomePage()),
                       (route) => false);
