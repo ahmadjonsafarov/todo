@@ -11,11 +11,13 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   List<String> listOfTodo=[];
+  TabController? _tabController;
  @override
   void initState() {
     getInfo();
+    _tabController=TabController(length: 2, vsync: this);
     super.initState();
   }
   Future getInfo() async {
@@ -29,6 +31,34 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("TODO LIST",style:Style.TextStyleBold(),
+        ),
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor:Colors.black,
+          unselectedLabelColor: Style.whiteColor,
+          labelColor: Colors.black,
+          tabs: [
+            Tab(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('To Do'),
+                  SizedBox(width: 10,),
+                  Icon(Icons.done)
+                ],
+              ),
+            ),
+            Tab(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Done'),
+                  SizedBox(width: 10,),
+                  Icon(Icons.done_all)
+                ],
+              ),
+            ),
+          ],
         ),
       ),
       body:ListView.builder(
