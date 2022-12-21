@@ -12,6 +12,27 @@ static setTodo(TodoModel todo) async {
   list.add(todoJson);
   store.setStringList('todo', list);
 }
+static setbool(TodoModel todo,int index) async {
+  SharedPreferences store=await SharedPreferences.getInstance();
+  List<String> list=store.getStringList('todo') ?? [];
+  List<TodoModel> listOfTodo=[];
+  list.forEach((element) {
+    listOfTodo.add(TodoModel.fromJson(jsonDecode(element)));
+  });
+  listOfTodo.removeAt(index);
+  listOfTodo.insert(index, todo);
+  list.clear();
+  listOfTodo.forEach((element) {
+    list.add(jsonEncode(element.ToJson()));
+  });
+  store.setStringList('todo', list);
+}
+static removeTodo(int index) async {
+  SharedPreferences store= await SharedPreferences.getInstance();
+  List<String> list=store.getStringList("todo") ?? [];
+  list.removeAt(index);
+  store.setStringList('todo', list);
+}
 static Future<List<TodoModel>> getTodo() async {
   SharedPreferences store=await SharedPreferences.getInstance();
   List<String> list =store.getStringList('todo')?? [];
