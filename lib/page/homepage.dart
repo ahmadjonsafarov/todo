@@ -26,14 +26,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.initState();
   }
   Future getInfo() async {
-   List<TodoModel> list=await LocalStore.getTodo();
-   list.forEach((element) {
-     if(element.isDone){
-       listOfDone.add(element);
-     }else{
-       listOfTodo.add(element);
-     }
-   });
+    listOfTodo=await LocalStore.getTodo();
+    listOfDone=await LocalStore.getDone();
     setState(() {});
   }
   bool isCheck=false;
@@ -93,6 +87,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         }));
                       }, child: Text("Edit(o'zgartirish)")),
                       TextButton(onPressed: (){
+                        LocalStore.removeTodo(index);
                         listOfTodo.removeAt(index);
                         Navigator.pop(context);
                         setState(() {});
@@ -109,7 +104,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     Checkbox(value: listOfTodo[index].isDone, onChanged: (value){
                       listOfTodo[index].isDone=!listOfTodo[index].isDone;
                       listOfDone.add(listOfTodo[index]);
-                      LocalStore.setbool(listOfTodo[index], index);
+                      LocalStore.setDOne(listOfTodo[index]);
+                      LocalStore.removeTodo(index);
                       listOfTodo.removeAt(index);
                       setState(() { });
                     }),
@@ -137,7 +133,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             }));
                           }, child: Text("Edit(o'zgartirish)")),
                           TextButton(onPressed: (){
-                            LocalStore.removeTodo(index);
+                            LocalStore.removeDone(index);
                             listOfDone.removeAt(index);
                             Navigator.pop(context);
                             setState(() {});
@@ -154,7 +150,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           Checkbox(value: listOfDone[index].isDone, onChanged: (value){
                             listOfDone[index].isDone=!listOfDone[index].isDone;
                             listOfTodo.add(listOfDone[index]);
-                            LocalStore.setbool(listOfDone[index], index);
+                            LocalStore.setTodo(listOfDone[index]);
+                            LocalStore.removeDone(index);
                             listOfDone.removeAt(index);
                             setState(() { });
                           }),

@@ -88,11 +88,12 @@ class _EditTodoPageState extends State<EditTodoPage> {
               borderRadius: BorderRadius.circular(100),
               onTap: () async {
                 if(isEmpty){
+                  widget.todomodel.isDone?LocalStore.setdonebool(TodoModel(title: textEditingController.text,isDone: widget.todomodel.isDone ), widget.index):
                   LocalStore.setbool(TodoModel(title: textEditingController.text,isDone: widget.todomodel.isDone ), widget.index);
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage()), (route) => false);
                 }
               },
-              child: Center(
+              child: const Center(
                 child: Text("Edit",style:Style.TextStyleNormal,),
               ),
             ),
