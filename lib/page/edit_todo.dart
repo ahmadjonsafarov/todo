@@ -56,7 +56,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
                 autofocus: true,
-                maxLength: 35,
+                maxLength: 40,
                 controller: textEditingController,
                 onChanged: (value){
                   if(value.isEmpty || oldTitle==value){
@@ -87,7 +87,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
             child: InkWell(
               borderRadius: BorderRadius.circular(100),
               onTap: () async {
-                if(isEmpty){
+                if(!isEmpty){
                   widget.todomodel.isDone?LocalStore.setdonebool(TodoModel(title: textEditingController.text,isDone: widget.todomodel.isDone ), widget.index):
                   LocalStore.setbool(TodoModel(title: textEditingController.text,isDone: widget.todomodel.isDone ), widget.index);
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage()), (route) => false);

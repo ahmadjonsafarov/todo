@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/main.dart';
 import 'package:todo_app/model/todo_model.dart';
 import 'package:todo_app/page/edit_todo.dart';
 import 'package:todo_app/page/style.dart';
 import 'package:todo_app/store/store.dart';
 import 'package:todo_app/widgets/keyboar.dart';
 import 'add_todo_page.dart';
+import 'dart:io' as page;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,9 +17,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+  GlobalKey key=GlobalKey();
   List<TodoModel> listOfTodo=[];
   List<TodoModel> listOfDone=[];
   TabController? _tabController;
+  bool isChange=false;
 
  @override
   void initState() {
@@ -34,7 +38,27 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
+      key: key,
+      drawer: Drawer(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Switch(value: isChange, onChanged: (value){
+                    isChange=!isChange;setState(() {});
+                  // MyApp.of(context)!.change();
+                  }),
+                  // CupertinoSwitch(value: isChange, onChanged: (value){isChange=!isChange;setState(() {});}),
+                  SizedBox(height: 10,),
+                  isChange? Text('ON',style: Style.TextStyleBold(fontsize: 23),):Text('OFF',style: Style.TextStyleBold(fontsize: 23),),
+                ],
+              )
+            ],
+          ),
+        )
+      ),
       appBar: AppBar(
         centerTitle: true,
         title: Text("TODO LIST",style:Style.TextStyleBold(),

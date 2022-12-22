@@ -46,7 +46,6 @@ class _AState extends State<A> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
-                maxLines: 2,
                 maxLength: 40,
                 controller: textEditingController,
                 onChanged: (value){

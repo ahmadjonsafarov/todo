@@ -24,7 +24,7 @@ abstract class Style{
         Color(0x70F43F5E).withOpacity(0.7),
       ]
   );
-  // --- textStyle -- //)
+  // --- textStyle -- //
   static const TextStyleNormal=TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.normal,
